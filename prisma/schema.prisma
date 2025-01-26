@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model List {
+  id        String   @id @default(uuid())
+  title     String
+  createdAt DateTime @default(now())
+
+  tasks Task[]
+
+  @@map("lists")
+}
+
+model Task {
+  id          String    @id @default(uuid())
+  title       String
+  description String
+  priority    String // (LOW, MEDIUM, HIGH, VERY_HIGH) SQLite does not supports enum :(
+  finishAt    DateTime
+  finishedAt  DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now()) @updatedAt
+
+  list   List   @relation(fields: [listId], references: [id], onDelete: Cascade)
+  listId String
+
+  files File[]
+
+  @@map("tasks")
+}
+
+model File {
+  id        String   @id @default(uuid())
+  path      String
+  createdAt DateTime @default(now())
+
+  task   Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  taskId String
+
+  @@map("files")
+}
