@@ -1,4 +1,4 @@
-# # Case produtos backend
+# Case produtos backend
 
 ## Pré requisitos
 - [Node](https://nodejs.org/pt)
