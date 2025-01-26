@@ -19,6 +19,8 @@ import { ListListsController } from './controllers/list-lists.controller';
 import { UpdateListController } from './controllers/update-list.controller';
 import { UploadFileService } from 'src/services/upload-file.service';
 import { UploadFileController } from './controllers/upload-file.controller';
+import { DownloadFileService } from 'src/services/download-file.service';
+import { DownloadFileController } from './controllers/download-file.controller';
 
 @Module({
   imports: [DatabaseModule, StorageModule],
@@ -32,6 +34,7 @@ import { UploadFileController } from './controllers/upload-file.controller';
     ListListsController,
     UpdateListController,
     UploadFileController,
+    DownloadFileController,
   ],
   providers: [
     CreateTaskService,
@@ -43,6 +46,7 @@ import { UploadFileController } from './controllers/upload-file.controller';
     ListListsService,
     UpdateListService,
     UploadFileService,
+    DownloadFileService,
   ],
 })
 export class HttpModule {}

@@ -8,7 +8,7 @@ type UpdateTaskServiceRequest = {
   title: string;
   description: string;
   priority: string;
-  finishAt: Date;
+  finishAt: string;
   finishedAt: Date | null;
   listId: string;
 };

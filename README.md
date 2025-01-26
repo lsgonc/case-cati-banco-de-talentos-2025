@@ -59,7 +59,7 @@
   - `title` (string): Título da tarefa.
   - `description` (string): Descrição da tarefa.
   - `priority` (number): Nível de prioridade da tarefa.
-  - `finishAt` (date): Data de vencimento da tarefa.
+  - `finishAt` (date): Data de vencimento da tarefa (formato ISO).
   - `listId` (string): ID da lista à qual a tarefa pertence.
 - **Resposta**:
   - Retorna o objeto da tarefa criada.
@@ -81,7 +81,7 @@
   - `title` (string): Novo título da tarefa.
   - `description` (string): Nova descrição da tarefa.
   - `priority` (number): Novo nível de prioridade da tarefa.
-  - `finishAt` (date): Nova data de vencimento da tarefa.
+  - `finishAt` (date): Nova data de vencimento da tarefa (formato ISO).
   - `listId` (string): ID da nova lista para a tarefa.
   - `isFinished` (boolean): Status de conclusão da tarefa.
 - **Resposta**:
@@ -108,16 +108,21 @@
   - `file` (file): Arquivo a ser enviado.
     - **Tamanho Máximo**: 100MB.
 - **Resposta**:
-  - Retorna o objeto contendo informações do arquivo enviado.
-  ```json
-  {
-    "file": {
-      "path": "nome-do-arquivo-no-servidor",
-      "taskId": "id-da-tarefa"
-    }
-  }
-  ```
+  - Retorna o objeto do arquivo criado.
 - **Validações**:
   - O tamanho máximo do arquivo é de 100MB.
   - A rota aceita somente arquivos enviados como `multipart/form-data`.
-  
+
+#### Download de Arquivo
+- **URL**: `/files/:id`
+- **Método**: GET
+- **Código de Status**: 200
+- **Parâmetros**:
+  - `id` (string): ID do arquivo a ser baixado.
+- **Resposta**:
+  - Faz o download do arquivo como um fluxo (stream).
+- **Exemplo de Resposta**:
+  - O arquivo será enviado como uma resposta binária no corpo da requisição.
+- **Observações**:
+  - Certifique-se de que o ID fornecido corresponde a um arquivo existente.
+  - A resposta será manipulada diretamente pelo cliente, como navegadores ou ferramentas de download.

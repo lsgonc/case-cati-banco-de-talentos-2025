@@ -8,7 +8,7 @@ type CreateTaskServiceRequest = {
   title: string;
   description: string;
   priority: string;
-  finishAt: Date;
+  finishAt: string;
   listId: string;
 };
 

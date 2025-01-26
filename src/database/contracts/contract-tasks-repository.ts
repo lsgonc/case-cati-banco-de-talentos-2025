@@ -4,7 +4,7 @@ export type CreateTask = {
   title: string;
   description: string;
   priority: string;
-  finishAt: Date;
+  finishAt: string;
   listId: string;
 };
 
@@ -13,7 +13,7 @@ export type UpdateTask = {
   title: string;
   description: string;
   priority: string;
-  finishAt: Date;
+  finishAt: string;
   finishedAt: Date | null;
   listId: string;
 };

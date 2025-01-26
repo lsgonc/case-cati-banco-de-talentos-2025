@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { File } from '@prisma/client';
 import { TasksRepository } from '../database/contracts/contract-tasks-repository';
 import { ResourceNotFoundError } from './errors/resource-not-found-error';
-import { Folder, Storage } from '../storage/contracts/contract-storage';
+import { Storage } from '../storage/contracts/contract-storage';
 import { FilesRepository } from 'src/database/contracts/contract-files-repository';
 
 type UploadFileServiceRequest = {
@@ -28,11 +28,9 @@ export class UploadFileService {
   }: UploadFileServiceRequest): Promise<UploadFileServiceResponse> {
     const task = await this.tasksRepository.findById(taskId);
     if (!task) {
-      await this.storage.delete(path, Folder.ROOT);
+      await this.storage.delete(path);
       throw new ResourceNotFoundError('Task');
     }
-
-    await this.storage.save(path, Folder.ROOT);
     const file = await this.filesRepository.create({
       path,
       taskId,
