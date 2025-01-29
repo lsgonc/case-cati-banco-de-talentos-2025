@@ -7,6 +7,7 @@ import {
   MaxFileSizeValidator,
   Post,
   Param,
+  Get,
 } from '@nestjs/common';
 import { Express } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -17,12 +18,16 @@ import {
   uploadFileParamSchema,
 } from '../schemas/task-schemas';
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
+import { ListFilesService } from 'src/services/ListFileService';// New service for listing files
 
 const paramValidationPipe = new ZodValidationPipe(uploadFileParamSchema);
 
 @Controller('/tasks/:id/files')
 export class UploadFileController {
-  constructor(private uploadFileService: UploadFileService) {}
+  constructor(
+    private uploadFileService: UploadFileService,
+    private listFilesService: ListFilesService, // Inject the new service
+  ) {}
 
   @Post()
   @HttpCode(200)
@@ -48,6 +53,15 @@ export class UploadFileController {
 
     return {
       file,
+    };
+  }
+
+  @Get()
+  @HttpCode(200)
+  async listFiles(@Param(paramValidationPipe) { id }: UploadFileParamSchema) {
+    const files = await this.listFilesService.execute(id);
+    return {
+      files,
     };
   }
 }

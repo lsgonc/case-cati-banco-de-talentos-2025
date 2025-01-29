@@ -21,6 +21,7 @@ import { UploadFileService } from 'src/services/upload-file.service';
 import { UploadFileController } from './controllers/upload-file.controller';
 import { DownloadFileService } from 'src/services/download-file.service';
 import { DownloadFileController } from './controllers/download-file.controller';
+import { ListFilesService } from 'src/services/ListFileService';
 
 @Module({
   imports: [DatabaseModule, StorageModule],
@@ -47,6 +48,7 @@ import { DownloadFileController } from './controllers/download-file.controller';
     UpdateListService,
     UploadFileService,
     DownloadFileService,
+    ListFilesService
   ],
 })
 export class HttpModule {}
