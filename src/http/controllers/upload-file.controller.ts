@@ -8,6 +8,8 @@ import {
   Post,
   Param,
   Get,
+  Delete,
+  NotFoundException,
 } from '@nestjs/common';
 import { Express } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -19,6 +21,7 @@ import {
 } from '../schemas/task-schemas';
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe';
 import { ListFilesService } from 'src/services/ListFileService';// New service for listing files
+import { DeleteFileService } from 'src/services/delete-file-service';
 
 const paramValidationPipe = new ZodValidationPipe(uploadFileParamSchema);
 
@@ -27,6 +30,7 @@ export class UploadFileController {
   constructor(
     private uploadFileService: UploadFileService,
     private listFilesService: ListFilesService, // Inject the new service
+    private deleteFileService: DeleteFileService
   ) {}
 
   @Post()
@@ -63,5 +67,18 @@ export class UploadFileController {
     return {
       files,
     };
+  }
+
+  @Delete(':fileId')
+  @HttpCode(204)
+  async deleteFile(
+    @Param('id') taskId: string,
+    @Param('fileId') fileId: string,
+  ) {
+    const result = await this.deleteFileService.execute(taskId, fileId);
+    if (!result) {
+      throw new NotFoundException('File not found');
+    }
+    return;
   }
 }
